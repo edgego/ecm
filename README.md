@@ -7,7 +7,7 @@
 <hr />
 
 ## What is ECM
- ECM desighed for industry edge cloud , a small and low cost tool easy to  manager industry edge clouds. 
+ ECM desighed for industry edge cloud , a small and low cost tool easy to  manager industry edge clouds. ECM is  based on CNCF project k3s.
 
 ## Key Features
 
