@@ -11,10 +11,10 @@
 
 ## Key Features
 
-- Cross platform, ECM can create edge cloud on amd64,arm64,arm architecture. 
+- Cross platform, ECM can create edge cloud on amd64,arm64,arm device. 
 - .
 - .
-- Low cost.
+- Low cost,low carbon, small memory size and hard disk size.
 - Simplify operations by UI dashboard.
 - Portability between clouds by leveraging tools like [backup-restore-operator](https://github.com/rancher/backup-restore-operator).
 
