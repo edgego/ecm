@@ -32,40 +32,13 @@ Now supports the following providers, we encourage submitting PR contribution fo
 
 ## Quick Start (tl;dr)
 
-Scenario 1 - Run with docker:
+ Run with cli:
 
 ```bash
-# The commands will start autok3s daemon with an interactionable UI.
-# Standard Linux (Recommended)
-$ docker run -itd --restart=unless-stopped --net=host -v /var/run/docker.sock:/var/run/docker.sock cnrancher/autok3s:v0.4.9
 
-# MacOS 
-$ docker run -itd --restart=unless-stopped -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock cnrancher/autok3s:v0.4.9
+# The commands will start ecm daemon with an interactionable UI.
+ecm -d serve
 ```
-Scenario 2 - Run with docker-compose
-```bash
-# AutoK3s is available at: http://autok3s.vcap.me (vcap.me resolves to 127.0.0.1).
-# The cli and container uses the same `AUTOK3S_CONFIG` directory.
-docker-compose up -d
-```
-
-Scenario 3 - Run with cli:
-
-```bash
-# The commands use the shell script on MacOS and Linux, or visit the Releases page to download the executable for Windows.
-curl -sS http://rancher-mirror.cnrancher.com/autok3s/install.sh  | sh
-
-# The commands will start autok3s daemon with an interactionable UI.
-autok3s -d serve
-```
-
-## Demo Video
-
-In the demo, we install K3s by k3d provider in around 1 minute, and
-we can manage K3s clusters by kube-explorer dashboard.
-
-Watch the demo:
-
 
 
 # License
