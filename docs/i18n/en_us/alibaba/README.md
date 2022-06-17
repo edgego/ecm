@@ -124,7 +124,7 @@ OutBound    ALL         ALL       ALL                Allow All
 
 ## Creating a K3s cluster
 
-Please use `autok3s create` command to create a cluster in your ECS instance.
+Please use `ecm create` command to create a cluster in your ECS instance.
 
 ### Normal Cluster
 
@@ -163,7 +163,7 @@ ecm -d create -p alibaba --name myk3s --master 2 --datastore "mysql://<user>:<pa
 
 ## Join K3s Nodes
 
-Please use `autok3s join` command to add one or more nodes for an existing K3s cluster.
+Please use `ecm join` command to add one or more nodes for an existing K3s cluster.
 
 ### Normal Cluster
 
@@ -178,7 +178,7 @@ ecm -d join --provider alibaba --name myk3s --worker 1
 The commands to add one or more nodes for an existing HA K3s cluster varies based on the types of HA cluster. Please choose one of the following commands to run.
 
 ```bash
-autok3s -d join --provider alibaba --name myk3s --master 2 --worker 1
+ecm -d join --provider alibaba --name myk3s --master 2 --worker 1
 ```
 
 ## Delete K3s Cluster
@@ -211,7 +211,7 @@ This command will show detail information of a specified cluster, such as instan
 ecm describe -n <clusterName> -p alibaba
 ```
 
-> Note: There will be multiple results if using the same name to create with different providers, please use `-p <provider>` to choose a specified cluster, for example: `autok3s describe cluster myk3s -p alibaba`, should narrow down the result quite well.
+> Note: There will be multiple results if using the same name to create with different providers, please use `-p <provider>` to choose a specified cluster, for example: `ecm describe cluster myk3s -p alibaba`, should narrow down the result quite well.
 
 ```bash
 Name: myk3s
@@ -263,7 +263,7 @@ Nodes:
 
 ## Access K3s Cluster
 
-After the cluster is created, `autok3s` will automatically merge the `kubeconfig` so that you can access the cluster.
+After the cluster is created, `ecm` will automatically merge the `kubeconfig` so that you can access the cluster.
 
 ```bash
 ecm kubectl config use-context myk3s.cn-hangzhou.alibaba
@@ -287,7 +287,7 @@ ecm ssh --provider alibaba --name myk3s
 
 ## Other Usages
 
-Please run `autok3s <sub-command> --provider alibaba --help` commands, to discover other usages of AutoK3s.
+Please run `ecm <sub-command> --provider alibaba --help` commands, to discover other usages of ecm.
 
 ## Advanced Usages
 
@@ -295,7 +295,7 @@ We integrate some advanced components such as private registries, Terway, Alibab
 
 ### Setting up Private Registry
 
-Below are examples showing how you may configure `/etc/autok3s/registries.yaml` on your current node when using TLS, and making it take effect on k3s cluster by `ecm`.
+Below are examples showing how you may configure `/etc/ecm/registries.yaml` on your current node when using TLS, and making it take effect on k3s cluster by `ecm`.
 
 ```bash
 mirrors:
@@ -313,7 +313,7 @@ configs:
       ca_file:   # path to the ca file used in the registry
 ```
 
-When running `autok3s create` or `autok3s join` command, it takes effect with the`--registry /etc/autok3s/registries.yaml` flag, i.e.:
+When running `ecm create` or `ecm join` command, it takes effect with the`--registry /etc/ecm/registries.yaml` flag, i.e.:
 
 ```bash
 ecm -d create \
@@ -321,7 +321,7 @@ ecm -d create \
     --name myk3s \
     --master 1 \
     --worker 1 \
-    --registry /etc/autok3s/registries.yaml
+    --registry /etc/ecm/registries.yaml
 ```
 
 ### Enabling Alibaba Terway CNI Plugin
@@ -346,7 +346,7 @@ ecm -d create \
 
 ### Enable UI Component
 
-AutoK3s support 2 kinds of UI Component, including [kubernetes/dashboard](https://github.com/kubernetes/dashboard) and [cnrancher/kube-explorer](https://github.com/cnrancher/kube-explorer).
+ecm support 2 kinds of UI Component, including [kubernetes/dashboard](https://github.com/kubernetes/dashboard) and [cnrancher/kube-explorer](https://github.com/cnrancher/kube-explorer).
 
 #### Enable Kubernetes dashboard
 
