@@ -11,10 +11,10 @@
 
 ## Key Features
 
-- Shorter provisioning time with API, CLI and UI dashboard.
-- Cloud provider Integration(simplifies the setup process of [CCM](https://kubernetes.io/docs/concepts/architecture/cloud-controller) on cloud providers).
-- Flexible installation options, like K3s cluster HA and datastore(embedded etcd, RDS, SQLite, etc.).
-- Low cost(try spot instances in each cloud).
+- Cross platform, ECM can create edge cloud on amd64,arm64,arm architecture. 
+- .
+- .
+- Low cost.
 - Simplify operations by UI dashboard.
 - Portability between clouds by leveraging tools like [backup-restore-operator](https://github.com/rancher/backup-restore-operator).
 
