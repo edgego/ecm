@@ -22,12 +22,12 @@
 
 Now supports the following providers, we encourage submitting PR contribution for more providers:
 
-- [aws](docs/i18n/en_us/aws/README.md) - Bootstrap cloud onto Amazon EC2
-- [google](docs/i18n/en_us/google/README.md) - Bootstrap cloud onto Google Compute Engine
-- [alibaba](docs/i18n/en_us/alibaba/README.md) - Bootstrap cloud onto Alibaba ECS
-- [tencent](docs/i18n/en_us/tencent/README.md) - Bootstrap cloud onto Tencent CVM
-- [k3d](docs/i18n/en_us/k3d/README.md) - Bootstrap cloud onto Local Machine
-- [native](docs/i18n/en_us/native/README.md) - Bootstrap cloud onto any VM
+- [aws](docs/i18n/en_us/aws/README.md) - Bootstrap edge cloud onto Amazon EC2
+- [google](docs/i18n/en_us/google/README.md) - Bootstrap edge cloud onto Google Compute Engine
+- [alibaba](docs/i18n/en_us/alibaba/README.md) - Bootstrap edge cloud onto Alibaba ECS
+- [tencent](docs/i18n/en_us/tencent/README.md) - Bootstrap edge cloud onto Tencent CVM
+- [k3d](docs/i18n/en_us/k3d/README.md) - Bootstrap edge cloud onto Local Machine
+- [native](docs/i18n/en_us/native/README.md) - Bootstrap edge cloud onto any VM
 
 ## Quick Start
 
