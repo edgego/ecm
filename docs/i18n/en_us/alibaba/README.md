@@ -346,7 +346,7 @@ ecm -d create \
 
 ### Enable UI Component
 
-ecm support 2 kinds of UI Component, including [kubernetes/dashboard](https://github.com/kubernetes/dashboard) and [cnrancher/kube-explorer](https://github.com/cnrancher/kube-explorer).
+ecm support 2 kinds of UI Component, including [kubernetes/dashboard](https://github.com/kubernetes/dashboard).
 
 #### Enable Kubernetes dashboard
 
