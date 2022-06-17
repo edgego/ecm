@@ -39,6 +39,7 @@ Now supports the following providers, we encourage submitting PR contribution fo
 # The commands will start ecm daemon with an interactionable UI.
 ecm -d serve
 ```
+![image](https://user-images.githubusercontent.com/80612608/174299658-a645f7a2-6e6a-429e-bd88-56febf1256c4.png)
 
 
 # License
