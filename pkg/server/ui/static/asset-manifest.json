@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1755ca48.chunk.css",
+    "main.js": "/static/js/main.36de4541.chunk.js",
+    "main.js.map": "/static/js/main.36de4541.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a26a5258.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a26a5258.js.map",
+    "static/css/2.b4426710.chunk.css": "/static/css/2.b4426710.chunk.css",
+    "static/js/2.791fc8e3.chunk.js": "/static/js/2.791fc8e3.chunk.js",
+    "static/js/2.791fc8e3.chunk.js.map": "/static/js/2.791fc8e3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.8b4e421dc7f6978a648e2c6a5ad7a25c.js": "/precache-manifest.8b4e421dc7f6978a648e2c6a5ad7a25c.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.b4426710.chunk.css.map": "/static/css/2.b4426710.chunk.css.map",
+    "static/css/main.1755ca48.chunk.css.map": "/static/css/main.1755ca48.chunk.css.map",
+    "static/media/App.scss": "/static/media/register-bg.2ccde6b9.jpg",
+    "static/media/all.css": "/static/media/fa-solid-900.d824df7e.woff2"
+  }
+}
