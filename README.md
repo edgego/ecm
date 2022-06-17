@@ -1,7 +1,7 @@
 
 <div align="center">
   <h1>Edge Cloud Manager</h1>
-  <span>English / </span> <a href="http://docs.rancher.cn/docs/k3s/autok3s/_index/">Simplified Chinese</a>
+  <span>English / </span> <a href="https://github.com/edgego/">Simplified Chinese</a>
 </div>
 
 <hr />
