@@ -8,8 +8,6 @@ import (
 
 	"github.com/cnrancher/autok3s/cmd"
 	"github.com/cnrancher/autok3s/pkg/cli/kubectl"
-	//"github.com/cnrancher/autok3s/pkg/metrics" comment by edgego
-
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/spf13/cobra"
 )
