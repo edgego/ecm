@@ -30,7 +30,7 @@ Now supports the following providers, we encourage submitting PR contribution fo
 - [harvester](docs/i18n/en_us/harvester/README.md) - Bootstrap K3s onto Harvester VM
 - [native](docs/i18n/en_us/native/README.md) - Bootstrap K3s onto any VM
 
-## Quick Start (tl;dr)
+## Quick Start
 
  Run with cli:
 
