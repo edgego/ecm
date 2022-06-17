@@ -10,7 +10,7 @@ To ensure that ECS instances can be created and accessed successfully, please fo
 
 ### Setting up Environment
 
-Configure the following environment variables as showed below for the host on which you are running `autok3s`.
+Configure the following environment variables as showed below for the host on which you are running `ecm`.
 
 ```bash
 export ECS_ACCESS_KEY_ID='<access-key>'
@@ -131,7 +131,7 @@ Please use `autok3s create` command to create a cluster in your ECS instance.
 The following command uses Alibaba as cloud provider, creates a K3s cluster named "myk3s", and assign it with 1 master node and 1 worker node:
 
 ```bash
-autok3s -d create -p alibaba --name myk3s --master 1 --worker 1
+ecm -d create -p alibaba --name myk3s --master 1 --worker 1
 ```
 
 ### HA Cluster
@@ -143,7 +143,7 @@ Please use one of the following commands to create an HA cluster.
 The following command uses Alibaba as cloud provider, creates an HA K3s cluster named "myk3s", and assigns it with 3 master nodes.
 
 ```bash
-autok3s -d create -p alibaba --name myk3s --master 3 --cluster
+ecm -d create -p alibaba --name myk3s --master 3 --cluster
 ```
 
 #### External Database
@@ -158,7 +158,7 @@ In the example below, `--master 2` specifies the number of master nodes to be 2,
 Run the command below and create an HA K3s cluster with an external database:
 
 ```bash
-autok3s -d create -p alibaba --name myk3s --master 2 --datastore "mysql://<user>:<password>@tcp(<ip>:<port>)/<db>"
+ecm -d create -p alibaba --name myk3s --master 2 --datastore "mysql://<user>:<password>@tcp(<ip>:<port>)/<db>"
 ```
 
 ## Join K3s Nodes
@@ -170,7 +170,7 @@ Please use `autok3s join` command to add one or more nodes for an existing K3s c
 The command below shows how to add a worker node for an existing K3s cluster named "myk3s".
 
 ```bash
-autok3s -d join --provider alibaba --name myk3s --worker 1
+ecm -d join --provider alibaba --name myk3s --worker 1
 ```
 
 ### HA Cluster
@@ -186,7 +186,7 @@ autok3s -d join --provider alibaba --name myk3s --master 2 --worker 1
 This command will delete a k3s cluster named "myk3s".
 
 ```bash
-autok3s -d delete --provider alibaba --name myk3s
+ecm -d delete --provider alibaba --name myk3s
 ```
 
 ## List K3s Clusters
@@ -194,7 +194,7 @@ autok3s -d delete --provider alibaba --name myk3s
 This command will list all the clusters that you have created on this instance.
 
 ```bash
-autok3s list
+ecm list
 ```
 
 ```bash
@@ -208,7 +208,7 @@ myk3s  ap-nanjing   tencent   Running  2        1        v1.19.5+k3s2
 This command will show detail information of a specified cluster, such as instance status, node IP, kubelet version, etc.
 
 ```bash
-autok3s describe -n <clusterName> -p alibaba
+ecm describe -n <clusterName> -p alibaba
 ```
 
 > Note: There will be multiple results if using the same name to create with different providers, please use `-p <provider>` to choose a specified cluster, for example: `autok3s describe cluster myk3s -p alibaba`, should narrow down the result quite well.
@@ -266,15 +266,15 @@ Nodes:
 After the cluster is created, `autok3s` will automatically merge the `kubeconfig` so that you can access the cluster.
 
 ```bash
-autok3s kubectl config use-context myk3s.cn-hangzhou.alibaba
-autok3s kubectl <sub-commands> <flags>
+ecm kubectl config use-context myk3s.cn-hangzhou.alibaba
+ecm kubectl <sub-commands> <flags>
 ```
 
 In the scenario of multiple clusters, the access to different clusters can be completed by switching context.
 
 ```bash
-autok3s kubectl config get-contexts
-autok3s kubectl config use-context <context>
+ecm kubectl config get-contexts
+ecm kubectl config use-context <context>
 ```
 
 ## SSH K3s Cluster's Node
@@ -282,7 +282,7 @@ autok3s kubectl config use-context <context>
 Login to a specific k3s cluster node via ssh, i.e. myk3s.
 
 ```bash
-autok3s ssh --provider alibaba --name myk3s
+ecm ssh --provider alibaba --name myk3s
 ```
 
 ## Other Usages
@@ -295,7 +295,7 @@ We integrate some advanced components such as private registries, Terway, Alibab
 
 ### Setting up Private Registry
 
-Below are examples showing how you may configure `/etc/autok3s/registries.yaml` on your current node when using TLS, and making it take effect on k3s cluster by `autok3s`.
+Below are examples showing how you may configure `/etc/autok3s/registries.yaml` on your current node when using TLS, and making it take effect on k3s cluster by `ecm`.
 
 ```bash
 mirrors:
@@ -316,7 +316,7 @@ configs:
 When running `autok3s create` or `autok3s join` command, it takes effect with the`--registry /etc/autok3s/registries.yaml` flag, i.e.:
 
 ```bash
-autok3s -d create \
+ecm -d create \
     --provider alibaba \
     --name myk3s \
     --master 1 \
@@ -329,7 +329,7 @@ autok3s -d create \
 The instance's type determines the number of EIPs that a K3S cluster can assign to a cluster POD, more detail see [here](https://www.alibabacloud.com/help/zh/doc-detail/97467.htm).
 
 ```bash
-autok3s -d create \
+ecm -d create \
     ... \
     --terway "eni"
 ```
@@ -339,7 +339,7 @@ autok3s -d create \
 Please check [here](https://github.com/kubernetes/cloud-provider-alibaba-cloud/blob/master/docs/getting-started.md) for more information about Aliyun Cloud Provider.
 
 ```bash
-autok3s -d create \
+ecm -d create \
     ... \
     --cloud-controller-manager
 ```
@@ -353,7 +353,7 @@ AutoK3s support 2 kinds of UI Component, including [kubernetes/dashboard](https:
 You can enable Kubernetes dashboard using following command.
 
 ```bash
-autok3s -d create -p aws \
+ecm -d create -p aws \
     ... \
     --enable dashboard
 ```
@@ -364,7 +364,7 @@ If you want to create user token to access dashboard, please following this [doc
 You can enable kube-explorer using following command.
 
 ```bash
-autok3s explorer --context myk3s.ap-southeast-2.aws --port 9999
+ecm explorer --context myk3s.ap-southeast-2.aws --port 9999
 ```
 
 You can enable kube-explorer when creating K3s Cluster by UI.
