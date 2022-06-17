@@ -6,23 +6,8 @@
 
 <hr />
 
-## What is AutoK3s
+## What is ECM
 
-[K3s](https://github.com/k3s-io/k3s) is a fully certified Kubernetes offering, it can replace the "full-fat" K8s in some cases.
-
-AutoK3s is a lightweight tool for simplifying the cluster management of K3s, it can help you **Run K3s Everywhere**.
-
-<!-- toc -->
-
-- [Key Features](#key-features)
-- [Providers](#providers)
-- [Quick Start (tl;dr)](#quick-start-tldr)
-- [Demo Video](#demo-video)
-- [Developers' Guide](#developers-guide)
-- [Source Code](#source-code)
-- [License](#license)
-
-<!-- /toc -->
 
 ## Key Features
 
@@ -81,30 +66,11 @@ we can manage K3s clusters by kube-explorer dashboard.
 
 Watch the demo:
 
-![](docs/assets/autok3s-v0.4.7-demo.gif)
 
-
-## Developers' Guide
-
-Use `dapper` to manage project compilation, testing and packaging.
-
-- compilation: `BY=dapper make autok3s build`
-- testing: `BY=dapper make autok3s unit`
-- packing: `BY=dapper make autok3s package only`
-
-Install `dapper` please follow the [dapper](https://github.com/rancher/dapper) project.
-
-## Source Code
-
-AutoK3s is 100% open-source software. The project source code is spread across a number of repos:
-
-- https://github.com/cnrancher/autok3s
-- https://github.com/cnrancher/autok3s-ui
-- https://github.com/cnrancher/kube-explorer
 
 # License
 
-Copyright (c) 2022 [Rancher Labs, Inc.](http://rancher.com)
+Copyright (c) 2022 EdgeGo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
