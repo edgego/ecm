@@ -16,7 +16,7 @@
 - .
 - Low cost,low carbon, small memory size and hard disk size.
 - Simplify operations by UI dashboard.
-- Portability between clouds by leveraging tools like [backup-restore-operator](https://github.com/rancher/backup-restore-operator).
+- .
 
 ## Providers
 
