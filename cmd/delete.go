@@ -16,7 +16,7 @@ var (
 		Use:   "delete",
 		Short: "Delete a edge cloud",
 	}
-	dProvider = ""
+	dProvider = "native"
 	force     = false
 	dp        providers.Provider
 )
@@ -29,19 +29,20 @@ func init() {
 // DeleteCommand delete command.
 func DeleteCommand() *cobra.Command {
 	pStr := common.FlagHackLookup("--provider")
-
-	if pStr != "" {
-		if reg, err := providers.GetProvider(pStr); err != nil {
-			logrus.Fatalln(err)
-		} else {
-			dp = reg
-		}
-
-		deleteCmd.Flags().AddFlagSet(utils.ConvertFlags(deleteCmd, dp.GetCredentialFlags()))
-		deleteCmd.Flags().AddFlagSet(utils.ConvertFlags(deleteCmd, dp.GetDeleteFlags()))
-		deleteCmd.Example = dp.GetUsageExample("delete")
-		deleteCmd.Use = fmt.Sprintf("delete -p %s", pStr)
+	if pStr == "" {
+		pStr = "native"
 	}
+
+	if reg, err := providers.GetProvider(pStr); err != nil {
+		logrus.Fatalln(err)
+	} else {
+		dp = reg
+	}
+
+	deleteCmd.Flags().AddFlagSet(utils.ConvertFlags(deleteCmd, dp.GetCredentialFlags()))
+	deleteCmd.Flags().AddFlagSet(utils.ConvertFlags(deleteCmd, dp.GetDeleteFlags()))
+	deleteCmd.Example = dp.GetUsageExample("delete")
+	deleteCmd.Use = fmt.Sprintf("delete -p %s", pStr)
 
 	deleteCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		if dProvider == "" {
