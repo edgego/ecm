@@ -35,7 +35,7 @@ Now supports the following providers, we encourage submitting PR contribution fo
 firstly to get ssh key with command: ssh-keygen -t rsa
 
 Run command from command line: 
-ecm_win-amd64.exe create --provider native --region 深圳 --cluster --docker-script https://get.docker.com --enable dashboard --k3s-channel stable --k3s-install-mirror INSTALL_K3S_MIRROR=cn --k3s-install-script http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh --name m1  --ssh-user root --master-ips 192.168.1.151
+ecm_win-amd64.exe create --provider native --region test  --cluster --docker-script https://get.docker.com --enable dashboard --k3s-channel stable --k3s-install-mirror INSTALL_K3S_MIRROR=cn --k3s-install-script http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh --name m1  --ssh-user root --master-ips 192.168.1.151
 
  Run with ui:
 
