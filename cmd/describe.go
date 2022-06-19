@@ -19,7 +19,7 @@ var (
 		Short:   "Show details of a specific resource",
 		Example: `  ecm describe -n <cluster-name> -p <provider>`,
 	}
-	desProvider = ""
+	desProvider = "native"
 	name        = ""
 )
 
