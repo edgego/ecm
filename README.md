@@ -7,7 +7,7 @@
 <hr />
 
 ## What is ECM
- ECM is designed for industry edge cloud , a small and low cost tool easy to  manager industry edge clouds. ECM is based on CNCF project k3s. ECM can run on different platform, support winows, linux ,Mac OS. ECM can deploy edge cloud to nvidia Jetson device and Raspberry Pi device.
+ ECM is designed for industry edge cloud , a small and low cost tool easy to  manager industry edge clouds. ECM is based on CNCF project k3s. ECM can run on different platform(x86-amd64, arm,arm64), support winows, linux ,Mac OS. ECM can deploy edge cloud to nvidia Jetson device and Raspberry Pi device.
 
 ## Key Features
 
