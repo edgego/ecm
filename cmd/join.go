@@ -17,7 +17,7 @@ var (
 		Short: "Join one or more node(s) to an existing cloud",
 	}
 
-	jProvider = ""
+	jProvider = "native"
 	jp        providers.Provider
 )
 
@@ -29,18 +29,21 @@ func init() {
 func JoinCommand() *cobra.Command {
 	// load dynamic provider flags.
 	pStr := common.FlagHackLookup("--provider")
-	if pStr != "" {
-		if reg, err := providers.GetProvider(pStr); err != nil {
-			logrus.Fatalln(err)
-		} else {
-			jp = reg
-		}
-
-		joinCmd.Flags().AddFlagSet(utils.ConvertFlags(joinCmd, jp.GetCredentialFlags()))
-		joinCmd.Flags().AddFlagSet(utils.ConvertFlags(joinCmd, jp.GetJoinFlags()))
-		joinCmd.Example = jp.GetUsageExample("join")
-		joinCmd.Use = fmt.Sprintf("join -p %s", pStr)
+	if pStr == "" {
+		pStr = "native"
 	}
+	
+	if reg, err := providers.GetProvider(pStr); err != nil {
+		logrus.Fatalln(err)
+	} else {
+		jp = reg
+	}
+
+	joinCmd.Flags().AddFlagSet(utils.ConvertFlags(joinCmd, jp.GetCredentialFlags()))
+	joinCmd.Flags().AddFlagSet(utils.ConvertFlags(joinCmd, jp.GetJoinFlags()))
+	joinCmd.Example = jp.GetUsageExample("join")
+	joinCmd.Use = fmt.Sprintf("join -p %s", pStr)
+	
 
 	joinCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		if jProvider == "" {
