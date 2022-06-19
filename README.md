@@ -37,7 +37,7 @@ firstly to get ssh key with command: ssh-keygen -t rsa
 Run with command line :
 
 # Run command from command line: 
-ecm_win-amd64.exe ./bin/ecm_linux_amd64  create  --region 深圳 --cluster  --enable dashboard  --name m1 --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
+ecm_win-amd64.exe  create  --region 深圳 --cluster  --enable dashboard  --name m1 --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
 Run with ui:
 
 # The commands will start ecm daemon with an interactionable UI.
