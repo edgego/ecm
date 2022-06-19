@@ -36,14 +36,14 @@ firstly to get ssh key with command: ssh-keygen -t rsa
 
 Run with command line :
   create edge cloud:
-     ecm_win-amd64.exe  create  --region 深圳 --cluster  --enable dashboard  --name m1 --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
+     ecm_win-amd64.exe  create  --region edge cloud location --cluster  --enable dashboard  --name demo-test --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
   
   delete edge cloud:
-     ecm_win-amd64.exe  -d delete --name m1
+     ecm_win-amd64.exe  -d delete --name demo-test
   
   join node to edge cloud:
     ecm_win-amd64.exe -d join \
-    --name m1 \
+    --name demo-test \
     --ip 192.168.1.151 \
     --ssh-user root \
     --ssh-password 123+qwe \
