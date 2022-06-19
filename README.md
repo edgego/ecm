@@ -35,7 +35,19 @@ Now supports the following providers, we encourage submitting PR contribution fo
 firstly to get ssh key with command: ssh-keygen -t rsa
 
 Run with command line :
-  ecm_win-amd64.exe  create  --region 深圳 --cluster  --enable dashboard  --name m1 --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
+  create edge cloud:
+     ecm_win-amd64.exe  create  --region 深圳 --cluster  --enable dashboard  --name m1 --ssh-user root --ssh-password 123+qwe --ssh-port 22 --master-ips 192.168.1.151
+  
+  delete edge cloud:
+     ecm_win-amd64.exe  -d delete --name m1
+  
+  join node to edge cloud:
+    ecm_win-amd64.exe -d join \
+    --name m1 \
+    --ip 192.168.1.151 \
+    --ssh-user root \
+    --ssh-password 123+qwe \
+    --worker-ips 192.168.1.152
 
 Run with ui:
   # The commands will start ecm daemon with an interactionable UI.
