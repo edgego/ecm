@@ -17,7 +17,7 @@ var (
 		Short: "Create a edge cloud",
 	}
 
-	cProvider = ""
+	cProvider = "native"
 	cp        providers.Provider
 )
 
@@ -29,19 +29,22 @@ func init() {
 func CreateCommand() *cobra.Command {
 	// load dynamic provider flags.
 	pStr := common.FlagHackLookup("--provider")
-	if pStr != "" {
-		if reg, err := providers.GetProvider(pStr); err != nil {
-			logrus.Fatalln(err)
-		} else {
-			cp = reg
-		}
-
-		createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetCredentialFlags()))
-		createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetOptionFlags()))
-		createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetCreateFlags()))
-		createCmd.Example = cp.GetUsageExample("create")
-		createCmd.Use = fmt.Sprintf("create -p %s", pStr)
+	if pStr == "" {
+		pStr = "native"
 	}
+	
+	if reg, err := providers.GetProvider(pStr); err != nil {
+		logrus.Fatalln(err)
+	} else {
+		cp = reg
+	}
+
+	createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetCredentialFlags()))
+	createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetOptionFlags()))
+	createCmd.Flags().AddFlagSet(utils.ConvertFlags(createCmd, cp.GetCreateFlags()))
+	createCmd.Example = cp.GetUsageExample("create")
+	createCmd.Use = fmt.Sprintf("create -p %s", pStr)
+	
 
 	createCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		if cProvider == "" {
