@@ -34,7 +34,7 @@ Now supports the following providers, we encourage submitting PR contribution fo
 ```bash
 firstly to get ssh key with command: ssh-keygen -t rsa
 
-Run with command line :
+Run with command line:
   create edge cloud:
      ecm_win-amd64.exe  -d create \
      --region edge cloud location \
