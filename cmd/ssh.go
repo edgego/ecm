@@ -15,7 +15,7 @@ var (
 		Short: "Connect to a edge node through SSH",
 	}
 
-	sProvider = ""
+	sProvider = "native"
 	sp        providers.Provider
 )
 
@@ -27,18 +27,20 @@ func init() {
 func SSHCommand() *cobra.Command {
 	// load dynamic provider flags.
 	pStr := common.FlagHackLookup("--provider")
-	if pStr != "" {
-		if reg, err := providers.GetProvider(pStr); err != nil {
-			logrus.Fatalln(err)
-		} else {
-			sp = reg
-		}
-
-		sshCmd.Flags().AddFlagSet(utils.ConvertFlags(sshCmd, sp.GetCredentialFlags()))
-		sshCmd.Flags().AddFlagSet(utils.ConvertFlags(sshCmd, sp.GetSSHFlags()))
-		sshCmd.Example = sp.GetUsageExample("ssh")
+	if pStr == "" {
+		pStr = "native"
+	}
+	
+	if reg, err := providers.GetProvider(pStr); err != nil {
+		logrus.Fatalln(err)
+	} else {
+		sp = reg
 	}
 
+	sshCmd.Flags().AddFlagSet(utils.ConvertFlags(sshCmd, sp.GetCredentialFlags()))
+	sshCmd.Flags().AddFlagSet(utils.ConvertFlags(sshCmd, sp.GetSSHFlags()))
+	sshCmd.Example = sp.GetUsageExample("ssh")
+	
 	sshCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		if sProvider == "" {
 			logrus.Fatalln("required flag(s) \"[provider]\" not set")
