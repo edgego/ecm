@@ -39,7 +39,7 @@ func main() {
 		cmd.SSHCommand(), cmd.DescribeCommand(), cmd.ServeCommand() )
 
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
-		//metrics.ReportMetrics() comment by edgego
+	
 	}
 
 	if err := rootCmd.Execute(); err != nil {
