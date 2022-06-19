@@ -12,11 +12,10 @@
 ## Key Features
 
 - Cross platform, ECM can create edge cloud on amd64,arm64,arm device. 
-- .
+- Low carbon, green software. Make enough use of Low memory and low disk size devices to deploy edge cloud.
 - ECM support english and simple chinese language, according to browswer's language setting.
 - Low cost,low carbon, small memory size and hard disk size.
 - Simplify operations by UI dashboard.
-- .
 
 ## Providers
 
