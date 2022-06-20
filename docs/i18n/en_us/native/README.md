@@ -200,7 +200,7 @@ Nodes:
 After the cluster is created, `ecm` will automatically merge the `kubeconfig` so that you can access the cluster.
 
 ```bash
-ecm kubectl config use-context myk3s
+ecm kubectl config use-context mycloud
 ecm kubectl <sub-commands> <flags>
 ```
 
