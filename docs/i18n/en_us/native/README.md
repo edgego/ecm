@@ -146,7 +146,7 @@ ecm -d join \
 This command will delete a edge cloud named "mycloud".
 
 ```bash
-ecm -d delete --provider native --name mycloud
+ecm -d delete --name mycloud
 ```
 
 > PS: If the cluster is an existing K3s cluster which is not handled by ecm, we won't uninstall it when delete edge cloud from ecm.
@@ -229,7 +229,7 @@ ecm ssh --name mycloud <ip> --ssh-user ubuntu --ssh-key-path ~/.ssh/id_rsa
 
 ## Other Usages
 
-More usage details please running `ecm <sub-command> --provider native --help` commands.
+More usage details please running `ecm <sub-command> --help` commands.
 
 ## Advanced Usages
 
