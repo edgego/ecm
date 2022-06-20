@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This article provides users with the instructions to create and launch a edge cloud on a virtual machine(VM) or edge device(nvidia Jetson or Raspberry Pi), and to add nodes for an existing cloud on edge device. In addition, this article provides guidance of advanced usages of running cloud on VM, such as setting up private registry, and enabling UI components.
+This article provides users with the instructions to create and launch a edge cloud on a virtual machine(VM) or edge device(nvidia Jetson or Raspberry Pi), and to add nodes for an existing cloud on edge device. In addition, this article provides guidance of advanced usages of running cloud on edge device, such as setting up private registry, and enabling UI components.
 
 ## Prerequisites
 
-### Operating System on VM
+### Operating System on edge device
 
 You will need a VM that is capable of running popular Linux distributions such as **Ubuntu, Debian and Raspbian**, and register or set `SSH key/password` for them.
 
