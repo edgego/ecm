@@ -101,7 +101,7 @@ ecm -d join \
 
 If you want to join a worker node to an existing edge cloud which is not handled by ecm, please use the following command.
 
-> PS: The existing cluster is not handled by AutoK3s, so it's better to use the same ssh connect information for both master node and worker node so that we can access both VM with the same ssh config.
+> PS: The existing cluster is not handled by ecm, so it's better to use the same ssh connect information for both master node and worker node so that we can access both VM with the same ssh config.
 
 ```bash
 ecm -d join \
@@ -149,7 +149,7 @@ This command will delete a edge cloud named "mycloud".
 ecm -d delete --provider native --name mycloud
 ```
 
-> PS: If the cluster is an existing K3s cluster which is not handled by AutoK3s, we won't uninstall it when delete the cluster from AutoK3s.
+> PS: If the cluster is an existing K3s cluster which is not handled by ecm, we won't uninstall it when delete edge cloud from ecm.
 
 ## List edge clouds 
 
@@ -197,7 +197,7 @@ Nodes:
 
 ## Access edge cloud
 
-After the cluster is created, `autok3s` will automatically merge the `kubeconfig` so that you can access the cluster.
+After the cluster is created, `ecm` will automatically merge the `kubeconfig` so that you can access the cluster.
 
 ```bash
 ecm kubectl config use-context myk3s
@@ -219,9 +219,9 @@ Login to a specific k3s cluster node via ssh, i.e. mycloud.
 ecm ssh --name mycloud
 ```
 
-> If the edge cloud is an existing one which is not handled by AutoK3s, you can't use Execute Shell from UI, but you can access the cluster nodes via CLI.
+> If the edge cloud is an existing one which is not handled by ecm, you can't use Execute Shell from UI, but you can access the cluster nodes via CLI.
 
-If the ssh config is different between the existing nodes and current nodes(joined with AutoK3s), you can use the command below to switch the ssh config
+If the ssh config is different between the existing nodes and current nodes(joined with ecm), you can use the command below to switch the ssh config
 
 ```bash
 ecm ssh --name mycloud <ip> --ssh-user ubuntu --ssh-key-path ~/.ssh/id_rsa
@@ -237,7 +237,7 @@ We integrate some advanced components such as private registries and UI related 
 
 ### Setting up Private Registry
 
-When running `ecm create` or `autok3s join` command, it takes effect with the`--registry /etc/autok3s/registries.yaml` flag, i.e.:
+When running `ecm create` or `ecm join` command, it takes effect with the`--registry /etc/ecm/registries.yaml` flag, i.e.:
 
 ```bash
 ecm -d create \
@@ -246,7 +246,7 @@ ecm -d create \
     --ssh-key-path <ssh-key-path> \
     --master-ips <master-ip-1,master-ip-2> \
     --worker-ips <worker-ip-1,worker-ip-2> \
-    --registry /etc/autok3s/registries.yaml
+    --registry /etc/ecm/registries.yaml
 ```
 
 Below are examples showing how you may configure `/etc/ecm/registries.yaml` on your current node when using TLS, and make it take effect on edge cloud by `ecm`.
