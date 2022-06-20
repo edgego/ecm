@@ -8,11 +8,11 @@ This article provides users with the instructions to create and launch a edge cl
 
 ### Operating System on edge device
 
-You will need a VM that is capable of running popular Linux distributions such as **Ubuntu, Debian and Raspbian**, and register or set `SSH key/password` for them.
+You will need a device that is capable of running popular Linux distributions such as **Ubuntu, Debian and Raspbian**, and register or set `SSH key/password` for them.
 
 ### Setting up Security Group
 
-The VM needs to apply the following **minimum** Security Group Rules:
+The device needs to apply the following **minimum** Security Group Rules:
 
 <details>
 
@@ -31,7 +31,7 @@ OutBound    ALL         ALL       ALL                Allow All
 
 ## Creating a edge cloud
 
-Please use `ecm create` command to create a cluster in your VM.
+Please use `ecm create` command to create a cluster in your edge device.
 
 ### Normal Cluster
 
@@ -101,7 +101,7 @@ ecm -d join \
 
 If you want to join a worker node to an existing edge cloud which is not handled by ecm, please use the following command.
 
-> PS: The existing cluster is not handled by ecm, so it's better to use the same ssh connect information for both master node and worker node so that we can access both VM with the same ssh config.
+> PS: The existing cluster is not handled by ecm, so it's better to use the same ssh connect information for both master node and worker node so that we can access both edge device with the same ssh config.
 
 ```bash
 ecm -d join \
