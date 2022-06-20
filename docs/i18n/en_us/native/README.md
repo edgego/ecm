@@ -1,4 +1,4 @@
-# edge Provider
+# Edge Provider
 
 ## Introduction
 
