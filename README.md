@@ -51,7 +51,8 @@ Run with ui:
   # The commands will start ecm daemon with an interactionable UI.
   ecm -d serve --bind-port 8080
 ```
-![image](https://user-images.githubusercontent.com/80612608/174299845-08435f58-b8be-41b7-bb02-49fb9d7639a2.png)
+![image](https://user-images.githubusercontent.com/80612608/174512305-abd3d6c7-dd50-4e19-9994-8c23c0cb70dd.png)
+
 
 
 # License
