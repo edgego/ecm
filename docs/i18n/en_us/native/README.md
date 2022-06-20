@@ -269,7 +269,7 @@ configs:
 
 ### Enable UI Component
 
-ecm support UI Component, including [kubernetes/dashboard](https://github.com/kubernetes/dashboard) .
+ecm support Kubernetes dashboard, [kubernetes/dashboard](https://github.com/kubernetes/dashboard) .
 
 #### Enable Kubernetes dashboard
 
