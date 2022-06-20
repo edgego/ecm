@@ -1,4 +1,4 @@
-# Native Provider
+# edge Provider
 
 ## Introduction
 
