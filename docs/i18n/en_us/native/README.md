@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This article provides users with the instructions to create and launch a edge cloud on a virtual machine(VM), and to add nodes for an existing cloud on the VM. In addition, this article provides guidance of advanced usages of running cloud on VM, such as setting up private registry, and enabling UI components.
+This article provides users with the instructions to create and launch a edge cloud on a virtual machine(VM) or edge device(nvidia Jetson or Raspberry Pi), and to add nodes for an existing cloud on edge device. In addition, this article provides guidance of advanced usages of running cloud on VM, such as setting up private registry, and enabling UI components.
 
 ## Prerequisites
 
