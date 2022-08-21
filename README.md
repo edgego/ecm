@@ -31,7 +31,7 @@ Run with command line:
      --enable dashboard \
      --name demo-test \
      --ssh-user root \
-     --ssh-password 123+qwe \
+     --ssh-password ****** \
      --ssh-port 22 \
      --master-ips 192.168.1.151
   
