@@ -43,7 +43,7 @@ Run with command line:
     --name demo-test \
     --ip 192.168.1.151 \
     --ssh-user root \
-    --ssh-password 123+qwe \
+    --ssh-password ****** \
     --worker-ips 192.168.1.152
 
 Run with ui:
