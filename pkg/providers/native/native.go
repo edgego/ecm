@@ -136,14 +136,33 @@ func (p *Native) DeleteK3sNode(clusterID, nodeName, instanceId string) error {
 				err = cluster.DeleteNode(nodeName, client, 120)
 				if err != nil {
 					_, _ = fmt.Fprintf(os.Stderr, "%v\n", err)
+
+					state.Status = common.StatusRunning
+					err = common.DefaultDB.SaveClusterState(state)
+					if err != nil {
+						_, _ = fmt.Fprintf(os.Stderr, "%v\n", err)
+						return fmt.Errorf("[%s] failed to update cluster %s status , got error %v", p.Provider, p.Name, err)
+					}
+
 					return err
 				}
 
 				nodes := make([]types.Node, 0)
 				nodes = append(nodes, node)
 				warnMsg := p.UninstallK3sNodes(nodes)
-				for _, w := range warnMsg {
-					p.Logger.Warnf("[%s] %s", p.GetProviderName(), w)
+				if warnMsg != nil {
+					for _, w := range warnMsg {
+						p.Logger.Warnf("[%s] %s", p.GetProviderName(), w)
+					}
+
+					state.Status = common.StatusRunning
+					err = common.DefaultDB.SaveClusterState(state)
+					if err != nil {
+						_, _ = fmt.Fprintf(os.Stderr, "%v\n", err)
+						return fmt.Errorf("[%s] failed to update cluster %s status , got error %v", p.Provider, p.Name, err)
+					}
+
+					return err
 				}
 
 				state.MasterNodes = masterBytes
