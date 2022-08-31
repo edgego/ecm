@@ -15,7 +15,7 @@
 - ECM support english and simple chinese language, according to browswer's language setting.
 - Low cost,low carbon, small memory size(500Mi or above) and hard disk size.
 - Simplify operations by UI dashboard.
-- Integrdtion with cloud dashboard
+- Integration with cloud dashboard
 - Integration with EdgeGo system for edge device system
 
 ## Quick Start
