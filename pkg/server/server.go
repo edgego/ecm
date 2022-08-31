@@ -7,13 +7,29 @@ import (
 
 	"github.com/gorilla/mux"
 	responsewriter "github.com/rancher/apiserver/pkg/middleware"
+	// pprof
 	"net/http/pprof"
 )
 
 // Start starts daemon.
 func Start() http.Handler {
-	
+	/*s := server.DefaultAPIServer()
+	initMutual(s.Schemas)
+	initProvider(s.Schemas)
+	initCluster(s.Schemas)
+	initCredential(s.Schemas)
+	initKubeconfig(s.Schemas)
+	initLogs(s.Schemas)
+	initTemplates(s.Schemas)
+	initExplorer(s.Schemas)
+
+	apiroot.Register(s.Schemas, []string{"v1"})
+	*/
 	router := mux.NewRouter()
+	//router.UseEncodedPath()
+	//router.StrictSlash(true)
+
+	//router.Use(metricsMiddleware)
 	router.Use(webRequestMiddleware)
 
 	middleware := responsewriter.Chain{
@@ -48,8 +64,36 @@ func Start() http.Handler {
 	router.Handle("/debug/pprof/block", pprof.Handler("block"))
 	router.Handle("/debug/pprof/mutex", pprof.Handler("mutex"))
 
+	/*
+		router.PathPrefix("/proxy/explorer/{name}").Handler(proxy.NewExplorerProxy())
+		router.Path("/{prefix}/{type}").Handler(s)
+		router.Path("/{prefix}/{type}/{name}").Queries("link", "{link}").Handler(s)
+		router.Path("/{prefix}/{type}/{name}").Queries("action", "{action}").Handler(s)
+		router.Path("/{prefix}/{type}/{name}").Handler(s)
+
+		router.NotFoundHandler = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+			s.Handle(&types.APIRequest{
+				Request:   r,
+				Response:  rw,
+				Type:      "apiRoot",
+				URLPrefix: "v1",
+			})
+		})
+	*/
+
 	return router
 }
+
+/*
+func metricsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && strings.Contains(r.RequestURI, "/v1/clusters") {
+			//metrics.ReportMetrics()
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+*/
 
 func webRequestMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
