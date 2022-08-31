@@ -29,7 +29,7 @@ import (
 const (
 	k3sVersion          = ""
 	k3sChannel          = "stable"
-	k3sInstallScript    = "http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh"
+	k3sInstallScript    = "https://rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/k3s-install.sh"
 	master              = "0"
 	worker              = "0"
 	ui                  = false
@@ -87,7 +87,7 @@ func (p *ProviderBase) GetCreateOptions() []types.Flag {
 			Name:  "ui",
 			P:     &p.UI,
 			V:     p.UI,
-			Usage: "(deprecated) Enable K3s UI(kubernetes/dashboard). Will remove at v0.5.0. For how to login to UI, please see: https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md",
+			Usage: "Enable UI(kubernetes/dashboard).For how to login to UI, please see: https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md",
 		},
 		{
 			Name:  "cluster",
@@ -105,7 +105,7 @@ func (p *ProviderBase) GetCreateOptions() []types.Flag {
 			Name:  "enable",
 			P:     &p.Enable,
 			V:     p.Enable,
-			Usage: "(ui-components) Deploy packaged components (valid items: \"explorer, dashboard\"), e.g.(--enable dashboard), explorer is simplify UI for K3s(cnrnacher/kube-explorer); dashboard is kubernetes/dashboard",
+			Usage: "Deploy packaged components (valid items: \"edge-redis,edge-mqtt,edge-zmq, dashboard\"), e.g.(--enable dashboard), edge-redis(edge-mqtt,edge-zmq) is edge console UI for edgexfoundry; dashboard is kubernetes/dashboard",
 		},
 	}
 }
@@ -637,6 +637,7 @@ func (p *ProviderBase) GetClusterStatus(kubeCfg string, c *types.ClusterInfo, de
 	c.Worker = p.Worker
 	c.Region = p.Region       //add by edgego
 	c.UpdatedAt = p.UpdatedAt //add by edgego
+	c.Enable = p.Enable       //add by edgego
 	client, err := GetClusterConfig(p.ContextName, kubeCfg)
 	if err != nil {
 		p.Logger.Errorf("[%s] failed to generate kube client for cluster %s: %v", p.Provider, p.ContextName, err)
@@ -747,6 +748,7 @@ func ListClusters(providerName string) ([]*types.ClusterInfo, error) {
 			info.Worker = state.Worker
 			info.Region = state.Region       //add by edgego
 			info.UpdatedAt = state.UpdatedAt //add by edgego
+			info.Enable = state.Enable       //add by edgego
 			clusterList = append(clusterList, info)
 			continue
 		}
@@ -772,6 +774,7 @@ func ListClusters(providerName string) ([]*types.ClusterInfo, error) {
 			info.Worker = state.Worker
 			info.Region = state.Region       //add by edgego
 			info.UpdatedAt = state.UpdatedAt //add by edgego
+			info.Enable = state.Enable       //add by edgego
 			clusterList = append(clusterList, info)
 			continue
 		}
@@ -808,6 +811,8 @@ func (p *ProviderBase) syncExistNodes() {
 func (p *ProviderBase) Describe(kubeCfg string, c *types.ClusterInfo, describeInstance func() ([]types.Node, error)) *types.ClusterInfo {
 	c.Master = p.Master
 	c.Worker = p.Worker
+	c.UpdatedAt = p.UpdatedAt //add by edgego
+	c.Region = p.Region       //add by edgego
 	if kubeCfg == "" {
 		c.Status = common.StatusMissing
 		return c
