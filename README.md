@@ -13,7 +13,7 @@
 
 - Cross platform, ECM can create edge cloud on amd64,arm64,arm device. 
 - ECM support english and simple chinese language, according to browswer's language setting.
-- Low cost,low carbon, small memory size(less than 2G) and hard disk size.
+- Low cost,low carbon, small memory size(500Mi or above) and hard disk size.
 - Simplify operations by UI dashboard.
 - Integrdtion with cloud dashboard
 - Integration with EdgeGo system for edge device system
