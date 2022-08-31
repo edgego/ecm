@@ -108,6 +108,9 @@ const (
 	ClusterStatusUnknown = "Unknown"
 )
 
+// StringArray gorm custom string array flag type.
+type StringArray []string
+
 // ClusterInfo struct for cluster info.
 type ClusterInfo struct {
 	ID        string        `json:"id,omitempty"`
@@ -122,6 +125,7 @@ type ClusterInfo struct {
 	Nodes     []ClusterNode `json:"nodes,omitempty"`
 	UpdatedAt int64         `json:"updated-at,omitempty"` //add by edgego
 	//CreatedAt int64         `json:"created-at,omitempty"` //add by edgego
+	Enable StringArray `json:"enable,omitempty" yaml:"enable,omitempty" gorm:"type:stringArray"` //add by edgego
 }
 
 // ClusterNode struct for cluster node.
@@ -138,9 +142,6 @@ type ClusterNode struct {
 	Master                  bool     `json:"-"`
 	Standalone              bool     `json:"standalone"`
 }
-
-// StringArray gorm custom string array flag type.
-type StringArray []string
 
 // Scan gorm Scan implement.
 func (a *StringArray) Scan(value interface{}) (err error) {
