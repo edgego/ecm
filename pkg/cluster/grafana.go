@@ -63,7 +63,7 @@ data:
     # folder that contains provisioning config files that grafana will apply on
     startup and while running.
 
-    provisioning = conf/provisioning
+    provisioning = /etc/grafana/provisioning
 
 
     #################################### Server
@@ -1958,6 +1958,762 @@ data:
 
     ;enable_custom_baselayers = true
 ---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: provision-datasource
+  namespace: monitoring
+data:
+  default.yaml: |-
+    # config file version
+    apiVersion: 1
+
+    # list of datasources that should be deleted from the database
+    deleteDatasources:
+      - name: Prometheus
+        orgId: 1
+
+    # list of datasources to insert/update depending
+    # whats available in the database
+    datasources:
+      # <string, required> name of the datasource. Required
+    - name: Prometheus
+      # <string, required> datasource type. Required
+      type: prometheus
+      # <string, required> access mode. direct or proxy. Required
+      access: proxy
+      # <int> org id. will default to orgId 1 if not specified
+      orgId: 1
+      # <string> url
+      url: http://prometheus.monitoring:9090
+      # <string> database password, if used
+      password:
+      # <string> database user, if used
+      user:
+      # <string> database name, if used
+      database:
+      # <bool> enable/disable basic auth
+      basicAuth: false
+      # <string> basic auth username, if used
+      basicAuthUser:
+      # <string> basic auth password, if used
+      basicAuthPassword:
+      # <bool> enable/disable with credentials headers
+      withCredentials:
+      # <bool> mark as default datasource. Max one per org
+      isDefault: true
+      # <map> fields that will be converted to json and stored in json_data
+      jsonData:
+         graphiteVersion: "1.1"
+         tlsAuth: false
+         tlsAuthWithCACert: false
+      # <string> json object of data that will be encrypted.
+      secureJsonData:
+        tlsCACert: "..."
+        tlsClientCert: "..."
+        tlsClientKey: "..."
+      version: 1
+      # <bool> allow users to edit datasources from the UI.
+      editable: true
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: provision-dashboard
+  namespace: monitoring
+data:
+  default.yaml: |
+    apiVersion: 1
+
+    providers:
+    - name: autoevent
+      orgId: 1
+      folder: 'autoevent'
+      type: file
+      updateIntervalSeconds: 10
+      disableDeletion: false
+      allowUiUpdates: false
+      options:
+        path: /etc/grafana/provisioning/dashboards/autoevent
+        foldersFromFilesStructure: true
+    - name: command
+      orgId: 1
+      folder: 'command'
+      type: file
+      updateIntervalSeconds: 10
+      disableDeletion: false
+      allowUiUpdates: false
+      options:
+        path: /etc/grafana/provisioning/dashboards/command
+        foldersFromFilesStructure: true
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: command-dashboard
+  namespace: monitoring
+data:
+  command.json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": false,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "设备命令流量和执行结果监控",
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 6,
+      "iteration": 1634612541287,
+      "links": [],
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": []
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "right",
+              "values": [
+                "percent",
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(command_requests_total{device=\"$deviceName\"}) by (command)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "piechart"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": []
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "right",
+              "values": [
+                "percent",
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "mode": "none"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(command_requests_total{device=\"$deviceName\",command=\"$commandName\"}) by (code)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "piechart"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "kbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 16
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "none"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(command_response_data_bytes{device='$deviceName'})by(device)",
+              "format": "time_series",
+              "hide": false,
+              "instant": false,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "kbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 24
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "none"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(command_response_data_bytes{device='$deviceName',command='$commandName'}) by(device,command)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 30,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allValue": null,
+            "current": {
+              "selected": false,
+              "text": "Random-Float-Device",
+              "value": "Random-Float-Device"
+            },
+            "datasource": null,
+            "definition": "label_values(command_response_data_bytes,device)",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": "Device",
+            "multi": false,
+            "name": "deviceName",
+            "options": [],
+            "query": {
+              "query": "label_values(command_response_data_bytes,device)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "allValue": null,
+            "current": {
+              "selected": false,
+              "text": "Float64Array",
+              "value": "Float64Array"
+            },
+            "datasource": null,
+            "definition": "label_values(command_response_data_bytes{device='$deviceName'},command)",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": "Command",
+            "multi": false,
+            "name": "commandName",
+            "options": [],
+            "query": {
+              "query": "label_values(command_response_data_bytes{device='$deviceName'},command)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-15m",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "command",
+      "uid": "wAE5jwD7z",
+      "version": 49
+    }
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: autoevent-dashboard
+  namespace: monitoring
+data:
+  autoevent.json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "自动事件流量监控",
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 5,
+      "iteration": 1634612628358,
+      "links": [],
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "none"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(resource_read_response_bytes{device='$deviceName'}) by(device)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "none"
+            }
+          },
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(resource_read_response_bytes{device='$deviceName',resource='$resourceName'}) by(device,resource)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": null,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "id": 2,
+          "title": "Row title",
+          "type": "row"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 30,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allValue": null,
+            "current": {
+              "selected": false,
+              "text": "MQTT-test-device",
+              "value": "MQTT-test-device"
+            },
+            "datasource": null,
+            "definition": "label_values(resource_read_response_bytes,device) ",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": "Device",
+            "multi": false,
+            "name": "deviceName",
+            "options": [],
+            "query": {
+              "query": "label_values(resource_read_response_bytes,device) ",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "allValue": null,
+            "current": {
+              "selected": false,
+              "text": "testping",
+              "value": "testping"
+            },
+            "datasource": null,
+            "definition": "label_values(resource_read_response_bytes,resource) ",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": "Resource",
+            "multi": false,
+            "name": "resourceName",
+            "options": [],
+            "query": {
+              "query": "label_values(resource_read_response_bytes,resource) ",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-15m",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "autoevent",
+      "uid": "gtasrwv7k",
+      "version": 23
+    }
+---
 kind: Service
 apiVersion: v1
 metadata:
@@ -1983,7 +2739,6 @@ spec:
       app: grafana
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: grafana
     spec:
@@ -1991,7 +2746,18 @@ spec:
         - name: config
           configMap:
             name: grafana-conf
-            defaultMode: 420
+        - name: autoevent
+          configMap:
+            name: autoevent-dashboard
+        - name: command
+          configMap:
+            name: command-dashboard
+        - name: datasource
+          configMap:
+            name: provision-datasource
+        - name: dashboard
+          configMap:
+            name: provision-dashboard
       containers:
         - name: grafana
           image: grafana/grafana:8.2.5
@@ -2011,6 +2777,14 @@ spec:
             - name: grafana-data
               mountPath: /var/lib/grafana
               subPath: grafana
+            - name: autoevent
+              mountPath: /etc/grafana/provisioning/dashboards/autoevent
+            - name: command
+              mountPath: /etc/grafana/provisioning/dashboards/command
+            - name: datasource
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: dashboard
+              mountPath: /etc/grafana/provisioning/dashboards
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -2031,5 +2805,5 @@ spec:
             storage: 1Gi
         storageClassName: local-path
         volumeMode: Filesystem
----
+  serviceName: grafana---
 `
