@@ -40,6 +40,7 @@ rules:
     resources:
       - configmaps
       - services
+      - pods
   - verbs:
       - get
       - list
@@ -518,15 +519,7 @@ data:
     Password = "su"
       [Database.Scheme]
       User = "user"
-      
-     [Monitoring]
-      GrafanaHost = "grafana.edgego.com" #change here for yours
-      GrafanaPath=""
-      GrafanaPort  =  80
-      PrometheusHost = "prometheus.edgego.com"  #change here for yours
-      PrometheusPath =""
-      PrometheusPort  =  80 
-      
+    
       [MQTTBroker]
          Schema="tcp"
          Host="192.168.1.244"
