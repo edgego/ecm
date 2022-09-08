@@ -2720,6 +2720,7 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
+  type: NodePort
   ports:
     - protocol: TCP
       port: 3000
