@@ -40,6 +40,7 @@ rules:
     resources:
       - configmaps
       - services
+      - pods
   - verbs:
       - get
       - list
