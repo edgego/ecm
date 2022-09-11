@@ -1,25 +1,11 @@
 package cluster
 
 const deviceMqttTmpl = `
-# Copyright 2017 The Kubernetes Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: edge-system
----
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -109,19 +95,18 @@ data:
 
     Port = 59861
 
-    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless
-    different value is needed.
+    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless different value is needed.
 
     StartupMsg = 'This is the Support Scheduler Microservice'
 
     MaxResultCount = 50000
 
-    MaxRequestSize = 0 # Not curently used. Defines the maximum size of http
-    request body in bytes
+    MaxRequestSize = 0 # Not curently used. Defines the maximum size of http request body in bytes
 
     RequestTimeout = '5s'
     
       [Service.CORSConfiguration]
+
       EnableCORS = false
       CORSAllowCredentials = false
       CORSAllowedOrigin = "http://edge-support-scheduler"
@@ -129,6 +114,7 @@ data:
       CORSAllowedHeaders = "Authorization, Accept, Accept-Language, Content-Language, Content-Type, X-Correlation-ID"
       CORSExposeHeaders = "Cache-Control, Content-Language, Content-Length, Content-Type, Expires, Last-Modified, Pragma, X-Correlation-ID"
       CORSMaxAge = 3600
+
 
     [Registry]
 
@@ -211,8 +197,7 @@ data:
 
     Port = 59881
 
-    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless
-    different value is needed.
+    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless different value is needed.
 
     StartupMsg = 'This is the EdgeX Core Metadata Microservice'
 
@@ -223,7 +208,7 @@ data:
 
     RequestTimeout = '5s'
     
-   [Service.CORSConfiguration]
+    [Service.CORSConfiguration]
       EnableCORS = false
       CORSAllowCredentials = false
       CORSAllowedOrigin = "http://edge-core-metadata"
@@ -231,6 +216,7 @@ data:
       CORSAllowedHeaders = "Authorization, Accept, Accept-Language, Content-Language, Content-Type, X-Correlation-ID"
       CORSExposeHeaders = "Cache-Control, Content-Language, Content-Length, Content-Type, Expires, Last-Modified, Pragma, X-Correlation-ID"
       CORSMaxAge = 3600
+
 
     [Registry]
 
@@ -343,7 +329,7 @@ data:
 
     RequestTimeout = '5s'
     
-   [Service.CORSConfiguration]
+    [Service.CORSConfiguration]
       EnableCORS = false
       CORSAllowCredentials = false
       CORSAllowedOrigin = "http://edge-support-notifications"
@@ -351,7 +337,6 @@ data:
       CORSAllowedHeaders = "Authorization, Accept, Accept-Language, Content-Language, Content-Type, X-Correlation-ID"
       CORSExposeHeaders = "Cache-Control, Content-Language, Content-Length, Content-Type, Expires, Last-Modified, Pragma, X-Correlation-ID"
       CORSMaxAge = 3600
-
 
     [Registry]
 
@@ -428,8 +413,7 @@ data:
 
     Port = 59882
 
-    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless
-    different value is needed.
+    ServerBindAddr = '0.0.0.0' # Leave blank so default to Host value unless different value is needed.
 
     StartupMsg = 'This is the Core Command Microservice'
 
@@ -448,7 +432,6 @@ data:
       CORSAllowedHeaders = "Authorization, Accept, Accept-Language, Content-Language, Content-Type, X-Correlation-ID"
       CORSExposeHeaders = "Cache-Control, Content-Language, Content-Length, Content-Type, Expires, Last-Modified, Pragma, X-Correlation-ID"
       CORSMaxAge = 3600
-
 
     [Registry]
 
@@ -519,7 +502,7 @@ data:
     Password = "su"
       [Database.Scheme]
       User = "user"
-    
+      
       [MQTTBroker]
          Schema="tcp"
          Host="192.168.1.244"
@@ -585,13 +568,11 @@ data:
       StoreAndForward = true
       RetryInterval = "5s"
       MaxRetryCount = 10
-      Image = 'edgego/app-service-configurable:v2.2.0'
       Host = 'edge-redis-ha-announce-0'
       Port=6379
-      Name = 'appservice'
       Password = ''
       Username = ''
-      PublishTopic = "diao"
+      PublishTopic = "test"
 
     [Registry]
     Host = "edge-core-consul"
@@ -603,7 +584,7 @@ data:
     [MessageBus]
       Host = "edge-mqtt-broker"
       Port = 1883
-      Type = "redis"
+      Type = "mqtt"
       
 ---
 kind: ConfigMap
@@ -1060,6 +1041,7 @@ spec:
     app: redis-ha
     "statefulset.kubernetes.io/pod-name": edge-redis-ha-server-1
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -1633,13 +1615,12 @@ data:
 
 
     edgex:
-      redisMsgBus: #redis connection key
-        protocol: redis
-        server: edge-redis-ha-announce-0
-        port: 6379
-        type: redis
+       mqttMsgBus: #mqtt connection key
+        protocol: tcp
+        server: edge-mqtt-broker
+        port: 1883
+        type: mqtt
         #  Below is optional configurations settings for mqtt
-        #  type: mqtt
         #  optional:
         #    ClientId: client1
         #    Username: user1
@@ -1653,20 +1634,6 @@ data:
         #    CertPEMBlock:
         #    KeyPEMBlock:
         #    SkipCertVerify: true/false
-      mqttMsgBus: #connection key
-        protocol: tcp
-        server: 127.0.0.1
-        port: 1883
-        type: mqtt
-        optional:
-          ClientId: "client1"
-
-      zeroMsgBus: #connection key
-        protocol: tcp
-        server: localhost
-        port: 5571
-        type: zero
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -1688,6 +1655,27 @@ metadata:
   namespace: edge-system
 data:
   edgex.yaml: |
+    app1:
+        messageType: event
+        port: 6379
+        protocol: redis
+        server: edge-redis-ha-announce-0
+        topic: app1-rules-event
+        type: redis
+    app2:
+        messageType: event
+        port: 6379
+        protocol: redis
+        server: edge-redis-ha-announce-0
+        topic: app2-rules-event
+        type: redis
+    app3:
+        messageType: event
+        port: 6379
+        protocol: redis
+        server: edge-redis-ha-announce-0
+        topic: app3-rule-events
+        type: redis
     default:
         messageType: request
         port: 6379
@@ -1702,6 +1690,20 @@ data:
         server: edge-redis-ha-announce-0
         topic: edgex/events/device/Test-Device-Modbus-Profile/modbus-tcp#
         type: redis
+    demo2:
+        messageType: event
+        port: 6379
+        protocol: redis
+        server: edge-redis-ha-announce-0
+        topic: rules-events
+        type: redis
+    demo3:
+        messageType: request
+        port: 6379
+        protocol: redis
+        server: edge-redis-ha-announce-0
+        topic: edgex/events/device/Test-Device-Modbus-Profile/modbus-tcp#
+        type: redis
     share_conf:
         connectionSelector: edgex.mqttMsgBus
         messageType: event
@@ -1710,6 +1712,7 @@ data:
         server: 192.168.1.244
         topic: events
         type: mqtt
+
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -1969,8 +1972,7 @@ data:
 
     Port = 59701
 
-    ServerBindAddr = "0.0.0.0" # if blank, uses default Go behavior
-    https://golang.org/pkg/net/#Listen
+    ServerBindAddr = "0.0.0.0" # if blank, uses default Go behavior https://golang.org/pkg/net/#Listen
 
     StartupMsg = "app-rules-engine has Started"
 
@@ -2012,8 +2014,7 @@ data:
     # so Database credentials can be pulled from Vault. Also now require when
     running with secure Consul
 
-    # Note when running in docker from compose file set the following
-    environment variables:
+    # Note when running in docker from compose file set the following environment variables:
 
     #   - SecretStore_Host: edgex-vault
 
@@ -2049,17 +2050,17 @@ data:
 
     Type="edgex-messagebus"
       [Trigger.EdgexMessageBus]
-      Type = "redis"
+       Type = "mqtt"
         [Trigger.EdgexMessageBus.SubscribeHost]
-        Host = "edge-redis-ha-announce-0"
-        Port = 6379
-        Protocol = "redis"
-        SubscribeTopics="edgex/events/#"
+          Host = "edge-mqtt-broker"
+          Port = 1883
+          Protocol = "tcp"
+          SubscribeTopics="edgex/events/#"
         [Trigger.EdgexMessageBus.PublishHost]
-        Host = "edge-redis-ha-announce-0"
-        Port = 6379
-        Protocol = "redis"
-        PublishTopic="rules-events"
+          Host = "edge-mqtt-broker"
+          Port = 1883
+          Protocol = "tcp"
+           PublishTopic="rules-events"
         [Trigger.EdgexMessageBus.Optional]
         authmode = 'usernamepassword'  # required for redis messagebus (secure or insecure).
         secretname = 'redisdb'
@@ -2207,4 +2208,5 @@ spec:
               name: mqtt-volume
             - mountPath: /mqtt/data
               name: mqtt-volume
+---
 `
