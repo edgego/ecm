@@ -16,7 +16,7 @@
 - Low cost,low carbon, small memory size(500Mi or above) and hard disk size.
 - Simplify operations by UI dashboard.
 - Integration with cloud dashboard
-- Integration with EdgeGo system for edge device system
+- Integration with EdgeGo system that is IOT system
 
 ## Quick Start
 
