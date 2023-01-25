@@ -71,10 +71,10 @@ require (
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.17.0
 	github.com/opencontainers/runc v1.0.3 // indirect
+	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/rancher/apiserver v0.0.0-20211025232108-df28932a5627
 	github.com/rancher/k3d/v5 v5.2.2
-	github.com/rancher/k3s v1.19.5-0.20201117235738-2532c10faad4
-	github.com/rancher/wrangler v0.8.10
+	github.com/rancher/wrangler v0.8.11
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/pflag v1.0.5
@@ -85,7 +85,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	google.golang.org/api v0.62.0
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.23.3
 	k8s.io/api v0.22.4
