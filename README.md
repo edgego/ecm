@@ -54,10 +54,8 @@ Run with ui:
 ```
 
 
-<img width="1900" alt="dd" src="https://user-images.githubusercontent.com/80612608/187695916-be253bd2-0a5c-41f8-91e1-8127db396185.png">
+<img width="1903" alt="image" src="https://github.com/edgego/ecm/assets/80612608/e6b42447-b812-4cae-bc83-4604631b195a">
 
-
-<img width="1891" alt="ddd" src="https://user-images.githubusercontent.com/80612608/187697475-18158d02-1bce-4a18-b2d8-988e171acbda.png">
 
 
 # License
